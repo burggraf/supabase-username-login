@@ -1,2 +1,2 @@
-npm run dev -- --open
+npm run dev -- --host 0.0.0.0 --open
 

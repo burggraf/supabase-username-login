@@ -1,8 +1,9 @@
+// @ts-nocheck
 import { invalid } from '@sveltejs/kit';
 import { words, allowed } from './words.server';
 import type { PageServerLoad, Actions } from './$types';
 
-export const load: PageServerLoad = ({ cookies }) => {
+export const load = ({ cookies }: Parameters<PageServerLoad>[0]) => {
 	const game = new Game(cookies.get('sverdle'));
 
 	return {
@@ -24,12 +25,12 @@ export const load: PageServerLoad = ({ cookies }) => {
 	};
 };
 
-export const actions: Actions = {
+export const actions = {
 	/**
 	 * Modify game state in reaction to a keypress. If client-side JavaScript
 	 * is available, this will happen in the browser instead of here
 	 */
-	update: async ({ request, cookies }) => {
+	update: async ({ request, cookies }: import('./$types').RequestEvent) => {
 		const game = new Game(cookies.get('sverdle'));
 
 		const data = await request.formData();
@@ -50,7 +51,7 @@ export const actions: Actions = {
 	 * Modify game state in reaction to a guessed word. This logic always runs on
 	 * the server, so that people can't cheat by peeking at the JavaScript
 	 */
-	enter: async ({ request, cookies }) => {
+	enter: async ({ request, cookies }: import('./$types').RequestEvent) => {
 		const game = new Game(cookies.get('sverdle'));
 
 		const data = await request.formData();
@@ -63,7 +64,7 @@ export const actions: Actions = {
 		cookies.set('sverdle', game.toString());
 	},
 
-	restart: async ({ cookies }) => {
+	restart: async ({ cookies }: import('./$types').RequestEvent) => {
 		cookies.delete('sverdle');
 	}
 };
@@ -141,3 +142,4 @@ class Game {
 		return `${this.index}-${this.guesses.join(' ')}-${this.answers.join(' ')}`;
 	}
 }
+;null as any as Actions;
