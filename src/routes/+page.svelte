@@ -133,9 +133,20 @@
 }
 const signOut = async () => {
 	console.log('signing out');
+	const error_message: any = document.getElementById('error');
+	const notes: any = document.getElementById('notes');
+	error_message.innerText = '';
+	notes.innerHTML = 'Signing out...<br/>';
 	const { error } = await supabase.auth.signOut()
 	console.log(error);
 	currentUser = null;
+	if (!error) {
+		notes.innerHTML += 'User signed out.<br/>';
+	} else {
+		notes.innerHTML += 'User sign out failed.<br/>';
+		notes.innerHTML += error?.message + '<br/>';
+		error_message.innerText = error?.message;
+	}
 }
 
 const getUser = async () => {
