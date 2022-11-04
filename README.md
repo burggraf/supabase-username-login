@@ -14,7 +14,7 @@ There are many reasons why you **SHOULD NOT DO THIS**.  However, it is possible.
 
 - users will not be able to recover their account if they forget the password
 - your site will become filled with a bunch of anonymous randos
-- <fill in whatever security issues you can dream up here>
+- ==fill in whatever potential security issues you can dream up here==
 
 ### Why am I still here?
 
@@ -27,9 +27,15 @@ Even though this is something you'll never implement (because you always follow 
 
 ### Getting Started
 
-- 
+clone the repo
+`git clone git@github.com:burggraf/supabase-username-login.git`
 
+install the modules using a package manager
+- bun (my new favorite) `bun install`
+- pnpm (faster than npm) `pnpm install`
+- npm (old skool kool) `npm install`
 
-### Run development server
-<pre>npm run dev -- --open</pre>
+run the dev server
+`npm run dev -- --open`
+
 
