@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { createClient, SupabaseClient } from '@supabase/supabase-js'
+	import { createClient, SupabaseClient, type User } from '@supabase/supabase-js'
+  import { onMount } from 'svelte'
 	const supabase: SupabaseClient = createClient('https://qmregqvlvbsiurgktjdg.supabase.co', 
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmVncXZsdmJzaXVyZ2t0amRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njc0OTUxMTgsImV4cCI6MTk4MzA3MTExOH0.gWgeSkw0-zURVV6OA7Ea0-fftUQR688NEuws0mgWTN4');
-
+	let currentUser: User | null = null;
 	const userNameCheck = (username: string) => {
 		if (username.length < 3 || username.length > 20)
 		return "Username must be between 3 and 20 characters";
@@ -31,8 +32,10 @@
 				password: password
 			});
 			console.log(data, error);
+			if (data?.user) {
+				currentUser = data.user;
+			}
 		}
-
 	}
 	const signIn = async () => {
 		console.log('signing in');
@@ -50,10 +53,20 @@
 				password: password
 			});
 			console.log(data, error);
+			if (data?.user) {
+				currentUser = data.user;
+			}
 		}
 }
 
+const getUser = async () => {
+	const { data: { user } } = await supabase.auth.getUser()
+	currentUser = user;
+}
 
+onMount(() => {
+    getUser();
+  });
 </script>
 
 <svelte:head>
@@ -71,6 +84,9 @@
 	<button on:click={signIn}>Login</button>
 	<br /><br />
 	<div class="error" id="error"></div>
+	<br />
+	<h3>Current User:</h3>
+	<pre>{JSON.stringify(currentUser, null, 2)}</pre>
 </main>
 <style>
 	main {
