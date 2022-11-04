@@ -26,6 +26,8 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const VITE_SUPABASE_URL: string;
+	export const VITE_SUPABASE_KEY: string;
 	export const NVM_INC: string;
 	export const WASMER_CACHE_DIR: string;
 	export const TERM_PROGRAM: string;
@@ -80,6 +82,7 @@ declare module '$env/static/private' {
 	export const SECURITYSESSIONID: string;
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
+	export const NODE_ENV: string;
 }
 
 /**
@@ -109,6 +112,8 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		VITE_SUPABASE_URL: string;
+		VITE_SUPABASE_KEY: string;
 		NVM_INC: string;
 		WASMER_CACHE_DIR: string;
 		TERM_PROGRAM: string;
@@ -163,6 +168,7 @@ declare module '$env/dynamic/private' {
 		SECURITYSESSIONID: string;
 		npm_node_execpath: string;
 		npm_config_prefix: string;
+		NODE_ENV: string;
 		[key: string]: string | undefined;
 	}
 }

@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { createClient, SupabaseClient, type User } from '@supabase/supabase-js'
-  import { onMount } from 'svelte'
-	const supabase: SupabaseClient = createClient('https://qmregqvlvbsiurgktjdg.supabase.co', 
-	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmVncXZsdmJzaXVyZ2t0amRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njc0OTUxMTgsImV4cCI6MTk4MzA3MTExOH0.gWgeSkw0-zURVV6OA7Ea0-fftUQR688NEuws0mgWTN4');
+  	import { onMount } from 'svelte'
+	const supabase: SupabaseClient = 
+		createClient(
+			import.meta.env.VITE_SUPABASE_URL, 
+			import.meta.env.VITE_SUPABASE_KEY
+		);
 	let currentUser: User | null = null;
 	const userNameCheck = (username: string) => {
 		if (username.length < 3 || username.length > 20)
