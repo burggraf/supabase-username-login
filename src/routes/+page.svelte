@@ -61,6 +61,12 @@
 			}
 		}
 }
+const signOut = async () => {
+	console.log('signing out');
+	const { error } = await supabase.auth.signOut()
+	console.log(error);
+	currentUser = null;
+}
 
 const getUser = async () => {
 	const { data: { user } } = await supabase.auth.getUser()
@@ -68,7 +74,11 @@ const getUser = async () => {
 }
 
 onMount(() => {
-    getUser();
+	const keys = Object.keys(localStorage);
+	const key = keys.find((key) => key.endsWith('-auth-token'));
+	if (key) { // we have a token stored in localStorage
+		getUser();
+	}
   });
 </script>
 
@@ -84,7 +94,9 @@ onMount(() => {
 	Password<br /><input id="password" type="password" placeholder="password" /><br />
 	<br /><br />
 	<button on:click={signUp}>Sign Up</button><br /><br />
-	<button on:click={signIn}>Login</button>
+	<button on:click={signIn}>Sign In</button><br /><br />
+	<button on:click={signOut}>Sign Out</button>
+
 	<br /><br />
 	<div class="error" id="error"></div>
 	<br />
